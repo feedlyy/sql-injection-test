@@ -32,6 +32,12 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer func(db *sqlx.DB) {
+		err = db.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}(db)
 
 	err = db.Ping()
 	if err != nil {
